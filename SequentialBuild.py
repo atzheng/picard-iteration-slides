@@ -34,7 +34,7 @@ def create_sequence(T):
         pi.add_background_rectangle(color=RED, buff=0.2)
 
     for fx in fs:
-        fx.add_background_rectangle(color=GREEN, buff=0.2)
+        fx.add_background_rectangle(color=GREEN, buff=0.2, opacity=0.3)
 
     arrows = VDict(
         it.chain.from_iterable(
@@ -74,6 +74,7 @@ def create_sequence(T):
                             f.get_left(),
                             angle=1,
                             color=BLACK,
+                            fill_color=WHITE,
                             stroke_width=1,
                             tip_length=0.15,
                         ),

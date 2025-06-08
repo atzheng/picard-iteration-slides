@@ -1,4 +1,9 @@
 slides:
   - Title
+  - Setup
   - SequentialBuild
   - PicardBuild
+  - Fulfillment
+  - MainResult
+  - ProofLemma
+  - Proof
