@@ -136,7 +136,9 @@ class PicardBuild(BaseSlide):
             sync_cps,
             time_labels,
         )
-        all_elements.scale(0.7).to_edge(RIGHT)
+        all_elements.scale(0.7).next_to(self.title, DOWN, buff=0.3).to_edge(
+            RIGHT
+        )
 
         text = LatexItems(
             r"\item Assign each process a set of times",
@@ -147,7 +149,7 @@ class PicardBuild(BaseSlide):
             page_width=r"0.4\textwidth",
         ).scale(0.65)
 
-        text.to_edge(LEFT)
+        text.next_to(all_elements, LEFT).to_edge(LEFT)
 
         anims = [
             # First text item and initial setup
@@ -176,17 +178,17 @@ class PicardBuild(BaseSlide):
             state_group1 = [rs1[i]]
             if i > 0:
                 state_group1.append(arrows1[(fs1[i - 1], rs1[i])])
-            anims.append(AnimationGroup(*[FadeIn(obj) for obj in state_group1]))
+            anims.append(AnimationGroup(*[Create(obj) for obj in state_group1]))
 
             if i not in [1, 3]:  # Only animate policies for indices 0, 2
                 anims.append(
                     AnimationGroup(
-                        FadeIn(arrows1[(rs1[i], pis1[i])]), FadeIn(pis1[i])
+                        Create(arrows1[(rs1[i], pis1[i])]), Create(pis1[i])
                     )
                 )
                 anims.append(
                     AnimationGroup(
-                        FadeIn(arrows1[(pis1[i], acs1[i])]),
+                        Create(arrows1[(pis1[i], acs1[i])]),
                         ReplacementTransform(acache1[0][i], acache1[1][i]),
                         Indicate(acache1[1][i]),
                     )
@@ -194,11 +196,11 @@ class PicardBuild(BaseSlide):
 
             anims.append(
                 AnimationGroup(
-                    FadeIn(arrows1[(acs1[i], fs1[i])]),
-                    FadeIn(fs1[i]),
-                    FadeIn(arrows1[(rs1[i], fs1[i])]),
-                    FadeIn(arrows1[(fs1[i], oms1[i])]),
-                    FadeIn(oms1[i]),
+                    Create(arrows1[(acs1[i], fs1[i])]),
+                    Create(fs1[i]),
+                    Create(arrows1[(rs1[i], fs1[i])]),
+                    Create(arrows1[(fs1[i], oms1[i])]),
+                    Create(oms1[i]),
                 )
             )
 
@@ -206,17 +208,17 @@ class PicardBuild(BaseSlide):
             state_group2 = [rs2[i]]
             if i > 0:
                 state_group2.append(arrows2[(fs2[i - 1], rs2[i])])
-            anims.append(AnimationGroup(*[FadeIn(obj) for obj in state_group2]))
+            anims.append(AnimationGroup(*[Create(obj) for obj in state_group2]))
 
             if i not in [0, 2]:  # Only animate policies for indices 1, 3
                 anims.append(
                     AnimationGroup(
-                        FadeIn(arrows2[(rs2[i], pis2[i])]), FadeIn(pis2[i])
+                        Create(arrows2[(rs2[i], pis2[i])]), Create(pis2[i])
                     )
                 )
                 anims.append(
                     AnimationGroup(
-                        FadeIn(arrows2[(pis2[i], acs2[i])]),
+                        Create(arrows2[(pis2[i], acs2[i])]),
                         ReplacementTransform(acache2[0][i], acache2[1][i]),
                         Indicate(acache2[1][i]),
                     )
@@ -224,11 +226,11 @@ class PicardBuild(BaseSlide):
 
             anims.append(
                 AnimationGroup(
-                    FadeIn(arrows2[(acs2[i], fs2[i])]),
-                    FadeIn(fs2[i]),
-                    FadeIn(arrows2[(rs2[i], fs2[i])]),
-                    FadeIn(arrows2[(fs2[i], oms2[i])]),
-                    FadeIn(oms2[i]),
+                    Create(arrows2[(acs2[i], fs2[i])]),
+                    Create(fs2[i]),
+                    Create(arrows2[(rs2[i], fs2[i])]),
+                    Create(arrows2[(fs2[i], oms2[i])]),
+                    Create(oms2[i]),
                 )
             )
 
@@ -251,13 +253,39 @@ class PicardBuild(BaseSlide):
             ]
         )
 
-        anims.append(
-            AnimationGroup(
-                acache1[1].animate.set_color(BLACK),
-                acache2[1].animate.set_color(BLACK),
-                seq1.animate.set_opacity(0.2),
-                seq2.animate.set_opacity(0.2),
+        # anims.append(
+        #     # AnimationGroup(
+        #     #     acache1[1].animate.set_color(BLACK),
+        #     #     acache2[1].animate.set_color(BLACK),
+        #     #     seq1.animate.set_opacity(0.2),
+        #     #     seq2.animate.set_opacity(0.2),
+        #     # )
+        # )
+
+        obs = (
+            VGroup(
+                Tex(r"Converges in at most $T$ iterations (induction)"),
+                Tex(
+                    r"For structured problems, can be $\ll T$ -- focus of remaining talk"
+                ),
+                Tex(r"Independent $\pi$ executions can be batched on GPU"),
             )
+            .arrange(DOWN, aligned_edge=LEFT, buff=0.3)
+            .next_to(text, DOWN, buff=0.8, aligned_edge=LEFT)
+        )
+
+        anims.extend(f.lmap(FadeIn, obs))
+        anims.extend(
+            [
+                AnimationGroup(
+                    Indicate(pis1[0]),
+                    Indicate(pis2[1])
+                ),
+                AnimationGroup(
+                    Indicate(pis1[2]),
+                    Indicate(pis2[3])
+                ),
+            ]
         )
 
         self.play_animations(anims)

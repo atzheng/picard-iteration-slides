@@ -98,34 +98,46 @@ class SequentialBuild(BaseSlide):
         T = 4
         rs, pis, acs, fs, oms, arrows = create_sequence(T)
 
+        time_labels = VGroup(
+            *[
+                MathTex(f"t={i}")
+                .rotate(90 * DEGREES)
+                .next_to(rs[i], LEFT, buff=0.5)
+                .set_opacity(0.4)
+                for i in range(T)
+            ]
+        )
+
         anims = []
         for i in range(T):
             # State node and its incoming arrow (except first state)
             state_group = [rs[i]]
+            anims.append(FadeIn(time_labels[i]))
+
             if i > 0:
                 state_group.append(arrows[(fs[i - 1], rs[i])])
-            anims.append(AnimationGroup(*[FadeIn(obj) for obj in state_group]))
+            anims.append(AnimationGroup(*[Create(obj) for obj in state_group]))
 
             # Policy node and its incoming arrow
             anims.append(
-                AnimationGroup(FadeIn(arrows[(rs[i], pis[i])]), FadeIn(pis[i]))
+                AnimationGroup(Create(arrows[(rs[i], pis[i])]), Create(pis[i]))
             )
 
             # Action node and its incoming arrow
             anims.append(
-                AnimationGroup(FadeIn(arrows[(pis[i], acs[i])]), FadeIn(acs[i]))
+                AnimationGroup(Create(arrows[(pis[i], acs[i])]), Create(acs[i]))
             )
 
             # Transition function, outcome, and their arrows
             anims.append(
                 AnimationGroup(
-                    FadeIn(arrows[(acs[i], fs[i])]),
-                    FadeIn(fs[i]),
-                    FadeIn(
+                    Create(arrows[(acs[i], fs[i])]),
+                    Create(fs[i]),
+                    Create(
                         arrows[(rs[i], fs[i])]
                     ),  # Add arc from state to transition
-                    FadeIn(arrows[(fs[i], oms[i])]),
-                    FadeIn(oms[i]),
+                    Create(arrows[(fs[i], oms[i])]),
+                    Create(oms[i]),
                 )
             )
 

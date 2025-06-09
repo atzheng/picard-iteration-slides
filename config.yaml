@@ -1,5 +1,7 @@
 slides:
   - Title
+  - Intro
+  - ThisTalk
   - Setup
   - SequentialBuild
   - PicardBuild
@@ -7,3 +9,11 @@ slides:
   - MainResult
   - ProofLemma
   - Proof
+  - GeneralPolicies
+  - ExperimentalSetup
+  - UniformDemand
+  - HeavyTailedDemand
+  - PolicyOpt
+  - Mujoco
+  - Mujoco2
+  - Conclusion

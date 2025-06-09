@@ -34,7 +34,7 @@ class Setup(BaseSlide):
             ],
             [
                 Tex(r"\textbf{Policy}"),
-                MathTex(r"\pi : \mathcal{S} \times \Omega \mapsto \mathcal{A}"),
+                MathTex(r"\pi : \mathcal{S} \mapsto \mathcal{A}"),
                 Tex(r"Fulfillment policy"),
             ],
         ]
@@ -50,16 +50,16 @@ class Setup(BaseSlide):
 
         # Annotation: cheap/expensive
         cheap = Tex(r"{Cheap (e.g., linear)}").set_color(GREEN)
-        cheap.next_to(table_data[4][1], UP, buff=0.1).shift(0.5 * RIGHT)
+        cheap.next_to(table_data[4][1], UP, buff=0.3).shift(0.5 * RIGHT)
 
         expensive = Tex(r"{Expensive (e.g., neural network)}").set_color(RED)
         expensive.next_to(table_data[5][1], DOWN, buff=0.4)
-        arrow = Arrow(
-            start=expensive.get_top(),
-            end=table_data[5][1].get_bottom(),
-            buff=0.05,
-            color=RED,
-        )
+        # arrow = Arrow(
+        #     start=expensive.get_top(),
+        #     end=table_data[5][1].get_bottom(),
+        #     buff=0.05,
+        #     color=RED,
+        # )
 
         # Inputs and goal
         inputs = (
@@ -78,11 +78,20 @@ class Setup(BaseSlide):
             .align_to(inputs, LEFT)
         )
 
-        all = Group(table, cheap, expensive, arrow, inputs, goal)
+        all = Group(table, cheap, expensive, inputs, goal)
 
         self.play_animations(
             [
-                # FadeIn(table),
-                FadeIn(all),
+                *map(lambda x: FadeIn(VGroup(*x)), table_data),
+                FadeIn(inputs),
+                FadeIn(goal),
+                AnimationGroup(
+                    FadeIn(cheap),
+                    table_data[4][1].animate.add_background_rectangle(GREEN, opacity=0.3, buff=0.2),
+                ),
+                AnimationGroup(
+                    FadeIn(expensive),
+                    table_data[5][1].animate.add_background_rectangle(RED, opacity=0.3, buff=0.2),
+                ),
             ]
         )

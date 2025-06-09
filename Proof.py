@@ -105,8 +105,12 @@ class Proof(BaseSlide):
         text = (
             VGroup(
                 Texx(r"By Lemma: If no nodes exhausted, there are no mistakes"),
-                Texx(r"Also: no processor will choose a node known to be exhausted in the cache"),
-                Texx(r"Therefore: if next iter has a mistake, it chose an {\bf exhausted node} which is {\bf not yet known to be exhausted} in the cache."),
+                Texx(
+                    r"Also: no processor will choose a node known to be exhausted in the cache"
+                ),
+                Texx(
+                    r"Therefore: if next iter has a mistake, it chose an {\bf exhausted node} which is {\bf not yet known to be exhausted} in the cache."
+                ),
                 # ParTex(
                 #     r"At iter $k$: suppose cache is correct up to time $t_k$, i.e.,",
                 #     width=0.9,
@@ -139,11 +143,12 @@ class Proof(BaseSlide):
                 Create(iter0),
                 Create(iter1),
                 FadeIn(text[0]),
-                Indicate(iter1[:exhaust_indices[0]]),
+                Indicate(iter1[: exhaust_indices[0] + 1]),
                 FadeIn(text[1]),
-                Indicate(iter1[exhaust_indices[0]]),
+                Indicate(iter1[exhaust_indices[0] + 2:exhaust_indices[0]+4]),
                 FadeIn(text[2]),
                 Create(iter2),
+                # Indicate(iter1[exhaust_indices[0] + 4]),
                 FadeIn(text[3]),
                 Create(iter3),
                 # FadeIn(text[4]),

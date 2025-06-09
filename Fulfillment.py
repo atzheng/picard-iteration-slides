@@ -27,12 +27,16 @@ class Fulfillment(BaseSlide):
         # Create cost labels
         c1 = MathTex(r"c_1(\omega_t)").next_to(line1.get_center(), UP, buff=0.2)
         c2 = MathTex(r"c_2(\omega_t)").next_to(line2.get_center(), UP, buff=0.2)
-        c3 = MathTex(r"c_3(\omega_t)").next_to(line3.get_center(), RIGHT, buff=0.2)
+        c3 = MathTex(r"c_3(\omega_t)").next_to(
+            line3.get_center(), RIGHT, buff=0.2
+        )
 
         # Create labels for shopper and warehouses
-        shopper_label = Tex(
-            r"Order $\omega_t$ \\ for product $i(\omega_t)$"
-        ).scale(0.8).next_to(shopper, DOWN, buff=0.2)
+        shopper_label = (
+            Tex(r"Order $\omega_t$ \\ for product $i(\omega_t)$")
+            .scale(0.8)
+            .next_to(shopper, DOWN, buff=0.2)
+        )
 
         wh1_label = (
             MathTex(r"\text{Inventory }W_{1,t} \\ \text{Capacity }C_{1,t}")
@@ -69,21 +73,22 @@ class Fulfillment(BaseSlide):
         )
         graph.scale(0.9).next_to(self.title, DOWN, buff=1).to_edge(LEFT)
 
+        Texx = f.partial(ParTex, width=0.5)
         text = (
             VGroup(
-                ParTex(r"Products $i \in [I]$, Nodes $j \in [J]$"),
-                ParTex(
+                Texx(r"Products $i \in [I]$, Nodes $j \in [J]$"),
+                Texx(
                     r"\textbf{Policy:} Choose fulfillment node \\ $a_t \in [J] \cup \{0\}$ (0 for unfulfill)"
                 ),
-                ParTex(r"\textbf{For Picard iteration:} \\"),
-                ParTex(
+                Texx(r"\textbf{For Picard iteration:} \\"),
+                Texx(
                     r"\textit{Parallelization:} Each process responsible for a set of products; allocate orders by product."
                 ),
-                ParTex(
+                Texx(
                     r"\textit{Initial cache:} Just unfulfill, $a_t^{(0)} = 0$"
                 ),
             )
-            .arrange(DOWN, aligned_edge=LEFT, buff=0.3)
+            .arrange(DOWN, aligned_edge=LEFT, buff=0.5)
             .scale(0.8)
             .next_to(graph, RIGHT, buff=0.3)
             .to_edge(RIGHT)
@@ -91,18 +96,25 @@ class Fulfillment(BaseSlide):
 
         # Animation sequence
         animations = [
-            FadeIn(shopper),
-            AnimationGroup(FadeIn(wh1), FadeIn(wh2), FadeIn(wh3), lag_ratio=0.2),
-            AnimationGroup(Create(line1), Create(line2), Create(line3), lag_ratio=0.2),
-            AnimationGroup(Write(c1), Write(c2), Write(c3), lag_ratio=0.2),
+            FadeIn(text[0]),
             AnimationGroup(
-                Write(shopper_label),
-                Write(wh1_label),
-                Write(wh2_label),
-                Write(wh3_label),
+                FadeIn(shopper),
+                FadeIn(shopper_label),
+            ),
+            AnimationGroup(
+                FadeIn(wh1), FadeIn(wh2), FadeIn(wh3), lag_ratio=0.2
+            ),
+            AnimationGroup(
+                Create(line1), Create(line2), Create(line3),
+                FadeIn(c1), FadeIn(c2), FadeIn(c3), lag_ratio=0.2
+            ),
+            AnimationGroup(
+                FadeIn(wh1_label),
+                FadeIn(wh2_label),
+                FadeIn(wh3_label),
                 lag_ratio=0.2,
             ),
-            FadeIn(text),
+            *map(FadeIn, text[1:])
         ]
         self.play_animations(animations)
 
