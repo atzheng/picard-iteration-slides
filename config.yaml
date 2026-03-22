@@ -1,19 +1,38 @@
 slides:
+  # Intro
   - Title
   - Intro
   - ThisTalk
+  # - Agenda
+  # 1. The challenge of policy simulation
+  # - Agenda1
+  - Agenda2
   - Setup
+  # 2. Our method: Picard Iteration
   - SequentialBuild
   - PicardBuild
+  # Good idea?
+  - GPU
+  - TimeWarp
+  # - Runtime
+  # 3. Convergence of Picard Iteration
+  - Agenda3
+  - Continuous
   - Fulfillment
   - MainResult
   - ProofLemma
   - Proof
   - GeneralPolicies
+  # 4. Numerical Results
+  - Agenda4
   - ExperimentalSetup
   - UniformDemand
   - HeavyTailedDemand
   - PolicyOpt
   - Mujoco
   - Mujoco2
-  - Conclusion
+  # 5. The bigger picture
+  - Agenda5
+  - ComputationGraph
+  - RelatedWork
+  # - Conclusion

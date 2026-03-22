@@ -4,7 +4,7 @@ import funcy as f
 
 class Mujoco(BaseSlide):
     def construct(self):
-        self.setup_slide(title="Beyond the Theory: General Dynamical Systems")
+        self.setup_slide(title="General Dynamical Systems")
 
         text = LatexItems(
             r"\item {\bf Environment}: Mujoco, a simple robotic locomotion benchmark",

@@ -5,7 +5,6 @@ import funcy as f
 class Title(BaseSlide):
     def construct(self):
         self.setup_slide()
-        self.wait(0.1)
         title = Tex(r"""
         Speeding Up Policy Simulation in Supply Chain RL
         """, font_size=55, color=BLACK)

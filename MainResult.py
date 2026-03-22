@@ -19,7 +19,7 @@ class MainResult(BaseSlide):
         # Consequence
         consequence = ParTex(
             r"\textbf{Consequence:} \quad "
-            r"With $N$ processes, Picard Iteration speeds up policy evaluation by a factor $N / J$.",
+            r"With $B$ processes, Picard Iteration speeds up policy evaluation by a factor $B / J$.",
             width=0.7,
         )
 

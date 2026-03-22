@@ -7,7 +7,7 @@ from SequentialBuild import create_sequence
 
 class PicardBuild(BaseSlide):
     def construct(self):
-        self.setup_slide(title="Parallelizing Simulation with Picard Iteration")
+        self.setup_slide(title="Time-Parallel Simulation with Picard Iteration")
 
         T = 4
         # Create two sequences
