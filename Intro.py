@@ -6,7 +6,7 @@ import funcy as f
 class Intro(BaseSlide):
     def construct(self):
         self.setup_slide(
-            title="Policy Evaluation is RL's Computational Bottleneck"
+            title="Policy Simulation is RL's Computational Bottleneck"
         )
 
         text = TexBox(
@@ -14,8 +14,8 @@ class Intro(BaseSlide):
             Reinforcement learning is SotA for many operations problems: inventory, queueing control, ridesharing dispatch, etc
             The basic policy optimization approach:
             1. Start with a candidate policy (e.g., neural network)
-            2. {\bf Policy Evaluation}: Simulate policy on historical data
-            3. Compute a gradient wrt policy parameters
+            2. {\bf Simulate policy} on historical data
+            3. Compute a gradient of performance wrt policy parameters
             4. Update policy, repeat
             """,
             width=10,

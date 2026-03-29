@@ -38,6 +38,7 @@ class Continuous(BaseSlide):
 
         prop = text2[2:]
         prop.add_background_rectangle(buff=0.2, color=GRAY)
+        # prop[1].fade(0.5)
 
         self.play_animations(
             [

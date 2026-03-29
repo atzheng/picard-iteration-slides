@@ -108,13 +108,13 @@ class ComputationGraph(BaseSlide):
             .xlim((0, 10))
             .xlab("GD iterate $i$")
             .ylab(r"$\theta_i$")
+            .geom_function(
+                function=lambda t: xt(t, 10), color=BLACK, label="Seq"
+            )
             .geom_function(function=lambda t: xt(t, 1), color=RED, label="k=1")
             .geom_function(function=lambda t: xt(t, 2), color=RED, label="k=2")
             .geom_function(function=lambda t: xt(t, 3), color=RED, label="k=3")
             .geom_function(function=lambda t: xt(t, 4), color=RED, label="k=4")
-            .geom_function(
-                function=lambda t: xt(t, 10), color=BLACK, label="Seq"
-            )
             .build(
                 x_length=6.5,
                 y_length=4,
@@ -129,9 +129,9 @@ class ComputationGraph(BaseSlide):
                 FadeIn(grp1),
                 FadeIn(grp2),
                 *map(FadeIn, text[:-1]),
-                FadeIn(grp3),
                 FadeIn(plot["axes"]),
                 *map(Create, plot["layers"]),
                 FadeIn(text[-1]),
+                FadeIn(grp3),
             ]
         )

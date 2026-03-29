@@ -5,7 +5,7 @@ import funcy as f
 
 class Mujoco2(BaseSlide):
     def construct(self):
-        self.setup_slide(title="Beyond the Theory: General Dynamical Systems")
+        self.setup_slide(title="General Dynamical Systems")
         text = Tex(
             r"{\bf Results}: Within 15 iters, RMSE of state vectors is < 0.1 \% (T=200)"
         ).next_to(self.title, DOWN, aligned_edge=LEFT, buff=0.3)

@@ -13,7 +13,6 @@ slides:
   - PicardBuild
   # Good idea?
   - GPU
-  - TimeWarp
   # - Runtime
   # 3. Convergence of Picard Iteration
   - Agenda3
@@ -35,4 +34,5 @@ slides:
   - Agenda5
   - ComputationGraph
   - RelatedWork
+  - TimeWarp
   # - Conclusion

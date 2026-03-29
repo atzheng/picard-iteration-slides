@@ -39,17 +39,17 @@ class Fulfillment(BaseSlide):
         )
 
         wh1_label = (
-            MathTex(r"\text{Inventory }W_{1,t} \\ \text{Capacity }C_{1,t}")
+            MathTex(r"\text{Inventory }W_{i, 1,t} \\ \text{Capacity }C_{1,t}")
             .scale(0.8)
             .next_to(wh1, RIGHT, buff=0.2)
         )
         wh2_label = (
-            MathTex(r"\text{Inventory }W_{2,t} \\ \text{Capacity }C_{2,t}")
+            MathTex(r"\text{Inventory }W_{i, 2,t} \\ \text{Capacity }C_{2,t}")
             .scale(0.8)
             .next_to(wh2, RIGHT, buff=0.2)
         )
         wh3_label = (
-            MathTex(r"\text{Inventory }W_{3,t} \\ \text{Capacity }C_{3,t}")
+            MathTex(r"\text{Inventory }W_{i, 3,t} \\ \text{Capacity }C_{3,t}")
             .scale(0.8)
             .next_to(wh3, RIGHT, buff=0.2)
         )

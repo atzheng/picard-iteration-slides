@@ -36,7 +36,7 @@ class GPU(BaseSlide):
             r"""
             Parallelism here: policies on different `processors' are executed in batch
             Why are large batches fast to compute? (Hint: not b/c a GPU has many cores)
-            Ex: multiply a $d \times d$ matrix by $d$-vectors, in batches of $B$:
+            E.g., multiply $d \times d$ weight matrix by size $d$ vectors, in batches of $B$:
             """,
             width=8,
         ).next_to(self.title, DOWN, buff=0.3, aligned_edge=LEFT)
@@ -82,9 +82,8 @@ class GPU(BaseSlide):
 
         text2 = TexBox(
             r"""
-            $\bullet$ VRAM: $d \times d$ weights + $d \times B$ batch
-            $\bullet$ Compute: $d \times d \times B$ FLOPS
-            As you increase $B$, time used to move weight matrix is amortized over batch
+            VRAM: Every batch moves $d \times d$ weights + $d \times B$ batch
+            Larger batches amortize the $d \times d$ weight movement
             Linear gains in throughput until you hit compute bottleneck
             """,
             width=8,
@@ -106,10 +105,10 @@ class GPU(BaseSlide):
                     color=MEM_COLOR,
                     # label="Mem. Bandwidth",
                 )
-                .geom_hline(yintercept=23, color=COM_COLOR, label="Max FLOPS/s")
+                .geom_hline(yintercept=23, color=COM_COLOR, label="Compute Bound")
                 .ylim((16, 30))
                 .geom_line(label="Empirical", color=GREEN_D)
-                .geom_hline(yintercept=27, color=MEM_COLOR, label="Max GB/s")
+                .geom_hline(yintercept=27, color=MEM_COLOR, label="Memory Bound")
                 .build(
                     x_length=4,
                     y_length=4,

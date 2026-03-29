@@ -157,4 +157,96 @@ class TimeWarp(BaseSlide):
             .set_y(0)
         )
 
-        self.play_animations([*map(FadeIn, text)])
+        # text[0]: "Input: a (sparse) conflict graph"
+        self.play_animations([FadeIn(text[0])])
+
+        # text[1]: "Each processor runs independently; upon completing a step, notify neighbors"
+        # Yellow dots show which timestep each processor is currently on
+        # Processor 4 (index 3) is on last timestep; others at varying positions
+        dot_positions = [
+            1,
+            2,
+            0,
+            per_group - 1,
+        ]  # timestep index within each group
+        progress_dots = [
+            Dot(
+                groups[gi][dot_positions[gi]].get_center(),
+                radius=0.06,
+                color=YELLOW,
+            ).set_z_index(2)
+            for gi in range(N_GROUPS)
+        ]
+
+        # Find all conflict edges incident to Processor 1 (index 0)
+        p1_edges = VGroup(
+            *[
+                cl
+                for cl in conflict_lines
+                if np.allclose(cl.get_start(), CORNERS[0], atol=0.1)
+                or np.allclose(cl.get_end(), CORNERS[0], atol=0.1)
+            ]
+        )
+
+        self.play_animations(
+            [
+                FadeIn(text[1]),
+                AnimationGroup(
+                    *[FadeIn(d) for d in progress_dots], lag_ratio=0.1
+                ),
+            ]
+        )
+
+        # Processor 1 completes a step: advance its yellow dot to the next cell
+        p1_dot = progress_dots[0]
+        p1_next_box = groups[0][dot_positions[0] + 1]
+        self.play_animations([p1_dot.animate.move_to(p1_next_box.get_center())])
+
+        # Conflict: Indicate edges incident to Processor 1
+        self.play_animations([Indicate(p1_edges, color=RED, scale_factor=1.0)])
+
+        # text[2]: "Neighbors check consistency; if not, roll back"
+        # Processor 4 (index 3) rolls back: shift its yellow dot back one cell
+        p4_dot = progress_dots[3]
+        p4_prev_box = groups[3][dot_positions[3] - 1]
+
+        self.play_animations(
+            [
+                FadeIn(text[2]),
+                p4_dot.animate.move_to(p4_prev_box.get_center()),
+            ]
+        )
+
+        # text[3]: blank line / "Problems: ..."
+        # text[4]: "Problems: fully-connected conflict graph..."
+        # Draw ALL edges to show fully-connected graph
+        full_lines = VGroup(
+            *[
+                Line(
+                    CORNERS[i],
+                    CORNERS[j],
+                    color=RED,
+                    stroke_width=2,
+                    stroke_opacity=0.6,
+                )
+                for i in range(N_GROUPS)
+                for j in range(i + 1, N_GROUPS)
+                if not any(
+                    np.allclose(cl.get_start(), CORNERS[i], atol=0.1)
+                    and np.allclose(cl.get_end(), CORNERS[j], atol=0.1)
+                    or np.allclose(cl.get_start(), CORNERS[j], atol=0.1)
+                    and np.allclose(cl.get_end(), CORNERS[i], atol=0.1)
+                    for cl in conflict_lines
+                )
+            ]
+        ).set_z_index(-1)
+
+        self.play_animations(
+            [
+                FadeIn(text[3]),
+                AnimationGroup(*[Create(l) for l in full_lines], lag_ratio=0.1),
+            ]
+        )
+
+        # text[4]: "Unsynchronized message passing, bad for GPUs"
+        self.play_animations([FadeIn(text[4])])
